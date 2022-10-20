@@ -48,7 +48,7 @@ const SearchInput: FC<Props> = ({
         />
         {error && <span className="search-input-error">{error}</span>}
       </div>
-      <Button type="submit" disabled={!value} loading={loading || true}>
+      <Button type="submit" disabled={!value} loading={loading}>
         Search
       </Button>
     </form>

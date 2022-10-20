@@ -1,4 +1,3 @@
-// Create new file scripts/heroku-start.js
 const express = require("express");
 const path = require("path");
 const app = express();
