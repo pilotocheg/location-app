@@ -2,7 +2,7 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-The app is hosted at: https://pilotocheg.github.io/location-app/
+The app is hosted at: http://location-test-app.herokuapp.com/
 
 ## Available Scripts
 
