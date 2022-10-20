@@ -1,6 +1,7 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 
 import "./style.sass";
+
 export interface HistoryItem {
   id: number;
   text: string;
@@ -13,7 +14,7 @@ interface Props {
 const SearchList: FC<Props> = ({ list }) => {
   return (
     <div className="search-list">
-      <p>Search history:</p>
+      <p className="title">Search history:</p>
       <ul>
         {list.map(({ id, text }) => (
           <li key={id}>{text}</li>
@@ -23,4 +24,4 @@ const SearchList: FC<Props> = ({ list }) => {
   );
 };
 
-export default SearchList;
+export default memo(SearchList);

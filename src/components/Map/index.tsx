@@ -1,4 +1,4 @@
-import { useRef, useCallback, FC, useEffect } from "react";
+import { useRef, useCallback, useMemo, FC, useEffect, memo } from "react";
 import OLMap from "ol/Map";
 import OLView from "ol/View";
 import OLFeature from "ol/Feature";
@@ -18,16 +18,19 @@ interface Props {
   lon: number;
 }
 
+const MAP_DEFAULT_ZOOM = 10;
+
 const Map: FC<Props> = ({ lat, lon }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
+
+  const coordinates = useMemo(() => fromLonLat([lon, lat]), [lon, lat]);
 
   const { current: marker } = useRef(
     new Vector({
       source: new VectorSource({
         features: [
           new OLFeature({
-            id: "id",
-            geometry: new GeomPoint(fromLonLat([lon, lat])),
+            geometry: new GeomPoint(coordinates),
           }),
         ],
       }),
@@ -52,19 +55,26 @@ const Map: FC<Props> = ({ lat, lon }) => {
         marker,
       ],
       view: new OLView({
-        center: fromLonLat([lon, lat]),
-        zoom: 10,
+        center: coordinates,
+        zoom: MAP_DEFAULT_ZOOM,
       }),
     })
   );
 
   useEffect(() => {
-    map.getView().setCenter(fromLonLat([lon, lat]));
-    marker
-      .getSource()
-      ?.getFeatureById("id")
-      ?.setGeometry(new GeomPoint(fromLonLat([lon, lat])));
-  }, [map, marker, lat, lon]);
+    const view = map.getView();
+    view.setCenter(coordinates);
+    view.setZoom(MAP_DEFAULT_ZOOM);
+    const markerSource = marker.getSource();
+    if (markerSource) {
+      markerSource.clear();
+      markerSource.addFeature(
+        new OLFeature({
+          geometry: new GeomPoint(coordinates),
+        })
+      );
+    }
+  }, [map, marker, coordinates]);
 
   const setContainerRef = useCallback(
     (ref: HTMLDivElement | null) => {
@@ -81,4 +91,4 @@ const Map: FC<Props> = ({ lat, lon }) => {
   return <div className="map-container" ref={setContainerRef} />;
 };
 
-export default Map;
+export default memo(Map);

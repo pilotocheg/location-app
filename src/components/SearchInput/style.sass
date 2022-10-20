@@ -1,0 +1,35 @@
+@import '../../style/_variables'
+
+.search-input-container
+  width: 100%
+  display: flex
+  align-items: center
+  font-size: 14px
+
+  .input-wrapper
+    flex-grow: 1
+    position: relative
+    display: flex
+    font-size: inherit
+
+    .search-input
+      flex-grow: 1
+      +paper-style
+      padding: 8px 16px
+      font-size: inherit
+
+      &.error
+        border-color: $error-color
+
+    .search-input-error
+      position: absolute
+      left: 0
+      top: calc(100% + 4px)
+      color: $error-color
+      font-size: 10px
+      line-height: 1
+      margin-left: 2px
+
+  .button
+    margin-left: 8px
+    font-size: inherit

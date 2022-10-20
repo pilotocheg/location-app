@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 import { LocationData } from "../../services/api/types";
 
 import "./style.sass";
@@ -21,4 +21,4 @@ const Info: FC<Props> = ({
   );
 };
 
-export default Info;
+export default memo(Info);
